@@ -62,10 +62,11 @@ const loginWeb3 = async() => {
             <AuthenticationCardLogo />
         </template>
         <div class="text-center pt-4 pb-8 border-b border-gray-200">
-            <jet-button @click="loginWeb3">
+            <PrimaryButton class="ml-4" @click="loginWeb3">
                 Login with MetaMask
-            </jet-button>
+            </PrimaryButton>
         </div>
+
         <div class="py-6 text-sm text-gray-500 text-center">
             or login with your credentials…
         </div>

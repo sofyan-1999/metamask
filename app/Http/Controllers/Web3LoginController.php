@@ -14,7 +14,7 @@ class Web3LoginController extends Controller
     public function signature(): string
     {
         $nonce = Str::random();
-        $message = "Sign this message to confirm you own this wallet address. This action will not cost any gas fees.\n\nNonce: " . $nonce;
+        $message = "Sign this message to confirm you own this wallet address. This action will not cost any gas fees.\n\nNonce: ".$nonce;
 
         session()->put('sign_message', $message);
 
@@ -26,10 +26,10 @@ class Web3LoginController extends Controller
         $this->verifySignature(session()->pull('sign_message'), $request->input('signature'), $request->input('address'));
 
         $user = User::firstOrCreate([
-            'eth_address' =>  $request->address,
+            'eth_address' => $request->address,
         ], [
             'name' => $request->address,
-            'email' => $request->address . '@gmail.com',
+            'email' => $request->address.'@gmail.com',
             'password' => Hash::make(123456),
             'eth_address' => $request->address,
         ]);
@@ -54,8 +54,8 @@ class Web3LoginController extends Controller
         }
 
         $pubkey = (new EC('secp256k1'))->recoverPubKey($hash, $sign, $recid);
-        $derived_address = '0x' . substr(Keccak::hash(substr(hex2bin($pubkey->encode('hex')), 1), 256), 24);
+        $derived_address = '0x'.substr(Keccak::hash(substr(hex2bin($pubkey->encode('hex')), 1), 256), 24);
 
-        return (Str::lower($address) === $derived_address);
+        return Str::lower($address) === $derived_address;
     }
 }

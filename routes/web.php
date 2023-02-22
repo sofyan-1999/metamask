@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\LoginUsingWeb3;
 use App\Http\Controllers\Web3LoginController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
