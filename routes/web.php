@@ -17,8 +17,6 @@ use Inertia\Inertia;
 |
 */
 
-Route::post('login-web3', LoginUsingWeb3::class);
-
 Route::get('/ethereum/signature', [Web3LoginController::class, 'signature']);
 Route::post('/ethereum/authenticate', [Web3LoginController::class, 'authenticate']);
 
