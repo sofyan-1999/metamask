@@ -47,15 +47,15 @@ class Web3LoginController extends Controller
             'r' => substr($signature, 2, 64),
             's' => substr($signature, 66, 64),
         ];
-        $recid = ord(hex2bin(substr($signature, 130, 2))) - 27;
+        $recoveryId = ord(hex2bin(substr($signature, 130, 2))) - 27;
 
-        if ($recid != ($recid & 1)) {
+        if ($recoveryId != ($recoveryId & 1)) {
             return false;
         }
 
-        $pubkey = (new EC('secp256k1'))->recoverPubKey($hash, $sign, $recid);
-        $derived_address = '0x'.substr(Keccak::hash(substr(hex2bin($pubkey->encode('hex')), 1), 256), 24);
+        $publicKey = (new EC('secp256k1'))->recoverPubKey($hash, $sign, $recoveryId);
+        $derivedAddress = '0x'.substr(Keccak::hash(substr(hex2bin($publicKey->encode('hex')), 1), 256), 24);
 
-        return Str::lower($address) === $derived_address;
+        return Str::lower($address) === $derivedAddress;
     }
 }
