@@ -16,7 +16,7 @@ use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-////sd/fdsafsa
+
 Route::get('/ethereum/signature', [Web3LoginController::class, 'signature']);
 Route::post('/ethereum/authenticate', [Web3LoginController::class, 'authenticate']);
 Route::get('health', HealthCheckResultsController::class);
