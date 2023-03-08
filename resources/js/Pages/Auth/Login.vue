@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Web3 from 'web3/dist/web3.min.js';
+import { Mailchain } from '@mailchain/sdk';
 
 defineProps({
     canResetPassword: Boolean,
@@ -52,6 +53,23 @@ const loginWeb3 = async() => {
     }
 };
 
+const sendMail = async()=> {
+    const secretRecoveryPhrase = import.meta.env.VITE_SECRET_RECOVERY_PHRASE; // 25 word mnemonicPhrase
+    const mailchain = Mailchain.fromSecretRecoveryPhrase(secretRecoveryPhrase);
+
+    const result = await mailchain.sendMail({
+        from: `sofyan@mailchain.com`, // sender address
+        to: [`0xd3c2e54024d33f819615082ec92375C179adC9D8@ethereum.mailchain.com`],// list of recipients (blockchain or mailchain addresses)
+        subject: 'My first message', // subject line
+        content: {
+            text: 'Hello Mailchain 👋', // plain text body
+            html: '<p>Hello Mailchain 👋</p>', // html body
+        },
+    });
+
+    console.log(result);
+};
+
 </script>
 
 <template>
@@ -61,6 +79,11 @@ const loginWeb3 = async() => {
         <template #logo>
             <AuthenticationCardLogo />
         </template>
+        <div class="text-center pt-4">
+            <PrimaryButton class="ml-4" @click="sendMail">
+                Send mail
+            </PrimaryButton>
+        </div>
         <div class="text-center pt-4 pb-8 border-b border-gray-200">
             <PrimaryButton class="ml-4" @click="loginWeb3">
                 Login with MetaMask
